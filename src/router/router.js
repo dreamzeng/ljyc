@@ -61,7 +61,10 @@ export const otherRouter = {
       path: 'home',
       title: { i18n: 'home' },
       name: 'home_index',
-      component: () => import('@/views/home/home.vue')
+      component: () => import('@/views/home/home.vue'),
+      meta:{
+        //title:'fa'
+      }
     },
     {
       path: 'ownspace',
