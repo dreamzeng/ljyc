@@ -4,7 +4,13 @@
 <template>
   <div class="main" :class="{'main-hide-text': shrink}">
     <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'visible'}">
-      <shrinkable-menu :shrink="shrink" @on-change="handleSubmenuChange" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :menu-list="menuList">
+      <shrinkable-menu 
+        :shrink="shrink" 
+        @on-change="handleSubmenuChange" 
+        :theme="menuTheme" 
+        :before-push="beforePush" 
+        :open-names="openedSubmenuArr" 
+        :menu-list="menuList">
         <div slot="top" class="logo-con">
           <img v-show="!shrink" src="../images/logo.jpg" key="max-logo" />
           <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
@@ -145,7 +151,7 @@ export default {
         });
       }
     },
-    checkTag(name) {
+    checkTag(name,father) {
       let openpageHasTag = this.pageTagsList.some(item => {
         if (item.name === name) {
           return true;
@@ -157,7 +163,8 @@ export default {
           this,
           name,
           this.$route.params || {},
-          this.$route.query || {}
+          this.$route.query || {},
+          father||{}
         );
       }
     },
@@ -183,7 +190,7 @@ export default {
       if (pathArr.length > 2) {
         this.$store.commit('addOpenSubmenu', pathArr[1].name);
       }
-      this.checkTag(to.name);
+      this.checkTag(to.name,to.matched[0]);
       localStorage.currentPageName = to.name;
     },
     lang() {

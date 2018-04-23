@@ -189,8 +189,18 @@ const app = {
         state.cachePage.push(tagObj.name);
         localStorage.cachePage = JSON.stringify(state.cachePage);
       }
-      state.pageOpenedList.push(tagObj);
+      state.pageOpenedList = [ {
+        title: '首页',
+        path: '',
+        name: 'home_index'
+      }];
+      //state.pageOpenedList.push(state.pageOpenedList[0]);
+      for(let i = 0 ,l = tagObj.length;i<l;i++){
+        state.pageOpenedList.push(tagObj[i]);
+      }
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+      /* state.pageOpenedList.push(tagObj);
+      localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList); */
     }
   }
 };

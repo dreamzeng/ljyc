@@ -129,6 +129,8 @@ export const appRouter = [
       }
     ]
   },
+/*
+  //多语言切换   
   {
     path: '/international',
     icon: 'earth',
@@ -143,7 +145,7 @@ export const appRouter = [
         component: () => import('@/views/international/international.vue')
       }
     ]
-  },
+  }, */
   {
     path: '/form',
     icon: 'android-checkbox',

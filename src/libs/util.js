@@ -193,7 +193,7 @@ util.setCurrentPath = function(vm, name) {
   return currentPathArr;
 };
 
-util.openNewPage = function(vm, name, argu, query) {
+util.openNewPage = function(vm, name, argu, query,father) {
   let pageOpenedList = vm.$store.state.app.pageOpenedList;
   let openedPageLen = pageOpenedList.length;
   let i = 0;
@@ -212,13 +212,13 @@ util.openNewPage = function(vm, name, argu, query) {
     i++;
   }
   if (!tagHasOpened) {
-    let tag = vm.$store.state.app.tagsList.filter(item => {
+    /* let tag = vm.$store.state.app.tagsList.filter(item => {
       if (item.children) {
         return name === item.children[0].name;
       } else {
         return name === item.name;
       }
-    });
+    }); 
     tag = tag[0];
     if (tag) {
       tag = tag.children ? tag.children[0] : tag;
@@ -229,7 +229,16 @@ util.openNewPage = function(vm, name, argu, query) {
         tag.query = query;
       }
       vm.$store.commit('increateTag', tag);
-    }
+    }  */
+    let fatherName = father.name;
+    let filterObj =  (vm.$store.state.app.routers.filter(item => {
+      return fatherName === item.name;
+    }))[0];
+    if(filterObj && filterObj.children){
+      let tag =  filterObj.children;
+      vm.$store.commit('increateTag', tag);
+    } 
+
   }
   vm.$store.commit('setCurrentPageName', name);
 };
