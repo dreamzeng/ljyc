@@ -5,7 +5,6 @@ import Vue from 'vue';
 
 const app = {
   state: {
-    cachePage: [],
     lang: '',
     isFullScreen: false,
     openedSubmenuArr: [], // 要展开的菜单数组
@@ -29,8 +28,7 @@ const app = {
     menuList: [],
     routers: [otherRouter, ...appRouter],
     tagsList: [...otherRouter.children],
-    messageCount: 0,
-    dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+    messageCount: 0
   },
   mutations: {
     setTagsList(state, list) {
@@ -105,18 +103,6 @@ const app = {
         state.openedSubmenuArr.push(name);
       }
     },
-    closePage(state, name) {
-      state.cachePage.forEach((item, index) => {
-        if (item === name) {
-          state.cachePage.splice(index, 1);
-        }
-      });
-    },
-    initCachepage(state) {
-      if (localStorage.cachePage) {
-        state.cachePage = JSON.parse(localStorage.cachePage);
-      }
-    },
     removeTag(state, name) {
       state.pageOpenedList.map((item, index) => {
         if (item.name === name) {
@@ -137,7 +123,7 @@ const app = {
     },
     clearAllTags(state) {
       state.pageOpenedList.splice(1);
-      state.cachePage.length = 0;
+    
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
     },
     clearOtherTags(state, vm) {
@@ -154,11 +140,7 @@ const app = {
         state.pageOpenedList.splice(currentIndex + 1);
         state.pageOpenedList.splice(1, currentIndex - 1);
       }
-      let newCachepage = state.cachePage.filter(item => {
-        return item === currentName;
-      });
-      state.cachePage = newCachepage;
-      localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+     
     },
     setOpenedList(state) {
       state.pageOpenedList = localStorage.pageOpenedList
@@ -185,19 +167,14 @@ const app = {
       state.messageCount = count;
     },
     increateTag(state, tagObj) {
-      if (!Util.oneOf(tagObj.name, state.dontCache)) {
-        state.cachePage.push(tagObj.name);
-        localStorage.cachePage = JSON.stringify(state.cachePage);
-      }
-      state.pageOpenedList = [ {
+      state.pageOpenedList = [{
         title: '首页',
         path: '',
         name: 'home_index'
       }];
-      //state.pageOpenedList.push(state.pageOpenedList[0]);
-      for(let i = 0 ,l = tagObj.length;i<l;i++){
-        state.pageOpenedList.push(tagObj[i]);
-      }
+      tagObj.forEach((item)=>{
+        state.pageOpenedList.push(item);
+      })
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
       /* state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList); */

@@ -28,7 +28,7 @@
 import sidebarMenu from './components/sidebarMenu.vue';
 import sidebarMenuShrink from './components/sidebarMenuShrink.vue';
 import util from '@/libs/util';
-const delta = 15;
+const delta = 150;
 export default {
   name: 'shrinkableMenu',
   components: {

@@ -58,9 +58,7 @@
     </div>
     <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
       <div class="single-page">
-        <keep-alive :include="cachePage">
-          <router-view></router-view>
-        </keep-alive>
+        <router-view :key="$route.path"></router-view>
       </div>
     </div>
   </div>
@@ -106,9 +104,6 @@ export default {
     },
     avatorPath() {
       return localStorage.avatorImgPath;
-    },
-    cachePage() {
-      return this.$store.state.app.cachePage;
     },
     lang() {
       return this.$store.state.app.lang;

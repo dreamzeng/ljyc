@@ -268,31 +268,28 @@ util.toDefaultPage = function(routers, name, route, next) {
 };
 
 util.fullscreenEvent = function(vm) {
-  vm.$store.commit('initCachepage');
   // 权限菜单过滤相关
   vm.$store.commit('updateMenulist');
   // 全屏相关
 };
 
-// iview-admin检查更新
-util.checkUpdate = function(vm) {
-  axios
-    .get('https://api.github.com/repos/iview/iview-admin/releases/latest')
-    .then(res => {
-      let version = res.data.tag_name;
-      vm.$Notice.config({
-        duration: 0
-      });
-      if (semver.lt(packjson.version, version)) {
-        vm.$Notice.info({
-          title: 'iview-admin更新啦',
-          desc:
-            '<p>iView-admin更新到了' +
-            version +
-            '了，去看看有哪些变化吧</p><a style="font-size:13px;" href="https://github.com/iview/iview-admin/releases" target="_blank">前往github查看</a>'
-        });
-      }
-    });
-};
+/* 
+  生成唯一的 uuid
+*/
+util.uuid = () =>{
+  var s = [];
+  var hexDigits = "0123456789abcdef";
+  for (var i = 0; i < 36; i++) {
+      s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+  }
+  s[14] = "4"; 
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); 
+                                                      
+  s[8] = s[13] = s[18] = s[23] = "-";
+
+  var uuid = s.join("");
+  return uuid;
+}
+
 
 export default util;
