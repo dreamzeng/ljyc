@@ -172,9 +172,7 @@ const app = {
         path: '',
         name: 'home_index'
       }];
-      tagObj.forEach((item)=>{
-        state.pageOpenedList.push(item);
-      })
+      state.pageOpenedList = state.pageOpenedList.concat(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
       /* state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList); */
